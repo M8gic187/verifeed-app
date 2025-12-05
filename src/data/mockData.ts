@@ -79,22 +79,6 @@ export const mockPosts: Post[] = [
     keywords: ['klima', 'wissenschaft', 'umwelt', 'forschung']
   },
   {
-    id: '3',
-    author: mockUsers[2],
-    content: 'Wenn der Montag wieder zuschlägt 😂 Wer kennt es nicht?',
-    media: {
-      type: 'reel',
-      url: 'https://images.unsplash.com/photo-1517849845537-4d257902454a?w=600&h=800&fit=crop',
-      isAiGenerated: false
-    },
-    likes: 45678,
-    comments: 1234,
-    shares: 8901,
-    createdAt: new Date(Date.now() - 10800000),
-    category: 'fun',
-    keywords: ['humor', 'montag', 'lustig', 'memes']
-  },
-  {
     id: '4',
     author: mockUsers[0],
     content: '⚠️ WARNUNG: Dieses Video wurde als KI-generiert erkannt. Unser System hat es automatisch markiert.',
