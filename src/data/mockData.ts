@@ -1,4 +1,4 @@
-import { User, Post, Story, Forum, ForumThread, GroupChat, ChatMessage } from '@/types';
+import { User, Post, Story, Forum, ForumThread, GroupChat, ChatMessage, Comment } from '@/types';
 
 export const mockUsers: User[] = [
   {
@@ -43,6 +43,23 @@ export const mockUsers: User[] = [
   }
 ];
 
+const mockComments: Comment[] = [
+  {
+    id: 'c1',
+    author: mockUsers[3],
+    content: 'Sehr interessant! Das wird die Medizin verändern.',
+    createdAt: new Date(Date.now() - 1800000),
+    likes: 12
+  },
+  {
+    id: 'c2',
+    author: mockUsers[1],
+    content: 'Wir haben darüber auch berichtet. Spannende Entwicklung!',
+    createdAt: new Date(Date.now() - 900000),
+    likes: 8
+  }
+];
+
 export const mockPosts: Post[] = [
   {
     id: '1',
@@ -55,7 +72,8 @@ export const mockPosts: Post[] = [
     },
     sources: ['Nature Medicine Journal 2024', 'WHO Health Report'],
     likes: 1243,
-    comments: 89,
+    commentCount: 2,
+    commentsList: mockComments,
     shares: 234,
     createdAt: new Date(Date.now() - 3600000),
     category: 'educational',
@@ -72,7 +90,8 @@ export const mockPosts: Post[] = [
     },
     sources: ['Science Magazine', 'MIT Technology Review'],
     likes: 2891,
-    comments: 156,
+    commentCount: 0,
+    commentsList: [],
     shares: 567,
     createdAt: new Date(Date.now() - 7200000),
     category: 'educational',
@@ -89,7 +108,8 @@ export const mockPosts: Post[] = [
     },
     sources: ['KI-Analyse System'],
     likes: 234,
-    comments: 45,
+    commentCount: 0,
+    commentsList: [],
     shares: 12,
     createdAt: new Date(Date.now() - 14400000),
     category: 'other',

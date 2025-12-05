@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
-import { User, ContentSettings, Post, Story, ForumThread, GroupChat } from '@/types';
+import { User, ContentSettings, Post, Story, ForumThread, GroupChat, Comment } from '@/types';
 import { currentUser, mockPosts, mockStories, mockForumThreads, mockGroupChats } from '@/data/mockData';
 
 interface AppContextType {
@@ -14,6 +14,7 @@ interface AppContextType {
   logout: () => void;
   updateContentSettings: (settings: Partial<ContentSettings>) => void;
   likePost: (postId: string) => void;
+  addComment: (postId: string, content: string) => void;
   reactToStory: (storyId: string, emoji: string) => void;
   voteThread: (threadId: string, isUpvote: boolean) => void;
   sendMessage: (chatId: string, content: string) => void;
@@ -57,6 +58,28 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const likePost = (postId: string) => {
     setPosts(prev => prev.map(post => 
       post.id === postId ? { ...post, likes: post.likes + 1 } : post
+    ));
+  };
+
+  const addComment = (postId: string, content: string) => {
+    if (!user) return;
+    
+    const newComment: Comment = {
+      id: `c${Date.now()}`,
+      author: user,
+      content,
+      createdAt: new Date(),
+      likes: 0
+    };
+
+    setPosts(prev => prev.map(post => 
+      post.id === postId 
+        ? { 
+            ...post, 
+            commentsList: [...post.commentsList, newComment],
+            commentCount: post.commentCount + 1 
+          }
+        : post
     ));
   };
 
@@ -138,6 +161,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       logout,
       updateContentSettings,
       likePost,
+      addComment,
       reactToStory,
       voteThread,
       sendMessage,
