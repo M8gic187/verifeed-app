@@ -42,7 +42,7 @@ export function LoginPage({ onLogin }: LoginPageProps) {
       {/* Header */}
       <div className="pt-20 pb-8 px-6 text-center">
         <h1 className="text-3xl font-bold bg-gradient-to-r from-primary to-accent-foreground bg-clip-text text-transparent mb-2">
-          TruthSocial
+          discuzz.
         </h1>
         <p className="text-sm text-muted-foreground">
           Verifizierte Informationen. Echte Verbindungen.
