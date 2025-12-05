@@ -1,16 +1,21 @@
+import { useState } from 'react';
 import { Heart, MessageCircle, Share2, MoreHorizontal, AlertTriangle, BadgeCheck, Bot } from 'lucide-react';
-import { Post } from '@/types';
+import { Post, User } from '@/types';
 import { cn } from '@/lib/utils';
 import { formatDistanceToNow } from 'date-fns';
 import { de } from 'date-fns/locale';
+import { CommentSection } from './CommentSection';
 
 interface PostCardProps {
   post: Post;
   onLike: () => void;
   onShare: () => void;
+  onAddComment: (content: string) => void;
+  currentUser: User | null;
 }
 
-export function PostCard({ post, onLike, onShare }: PostCardProps) {
+export function PostCard({ post, onLike, onShare, onAddComment, currentUser }: PostCardProps) {
+  const [showComments, setShowComments] = useState(false);
   const timeAgo = formatDistanceToNow(post.createdAt, { addSuffix: true, locale: de });
 
   return (
@@ -94,9 +99,12 @@ export function PostCard({ post, onLike, onShare }: PostCardProps) {
           <Heart className="w-5 h-5" />
           <span className="text-sm">{post.likes.toLocaleString()}</span>
         </button>
-        <button className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
+        <button 
+          onClick={() => setShowComments(!showComments)}
+          className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
+        >
           <MessageCircle className="w-5 h-5" />
-          <span className="text-sm">{post.comments}</span>
+          <span className="text-sm">{post.commentsList.length}</span>
         </button>
         <button 
           onClick={onShare}
@@ -118,6 +126,15 @@ export function PostCard({ post, onLike, onShare }: PostCardProps) {
           #{post.category}
         </span>
       </div>
+
+      {/* Comment Section */}
+      {showComments && (
+        <CommentSection
+          comments={post.commentsList}
+          onAddComment={onAddComment}
+          currentUser={currentUser}
+        />
+      )}
     </article>
   );
 }

@@ -7,6 +7,14 @@ export interface User {
   bio?: string;
 }
 
+export interface Comment {
+  id: string;
+  author: User;
+  content: string;
+  createdAt: Date;
+  likes: number;
+}
+
 export interface Post {
   id: string;
   author: User;
@@ -18,7 +26,8 @@ export interface Post {
   };
   sources?: string[];
   likes: number;
-  comments: number;
+  commentCount: number;
+  commentsList: Comment[];
   shares: number;
   createdAt: Date;
   isFlagged?: boolean;

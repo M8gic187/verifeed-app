@@ -8,7 +8,7 @@ import { Bell, Search } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 export function FeedPage() {
-  const { stories, getFilteredPosts, likePost, reactToStory } = useApp();
+  const { stories, getFilteredPosts, likePost, reactToStory, addComment, user } = useApp();
   const [selectedStory, setSelectedStory] = useState<Story | null>(null);
   const { toast } = useToast();
   const filteredPosts = getFilteredPosts();
@@ -33,7 +33,7 @@ export function FeedPage() {
       <header className="sticky top-0 bg-card/95 backdrop-blur-lg z-40 px-4 pt-10 pb-3 border-b border-border">
         <div className="flex items-center justify-between">
           <h1 className="text-xl font-bold bg-gradient-to-r from-primary to-accent-foreground bg-clip-text text-transparent">
-            TruthSocial
+            discuzz.
           </h1>
           <div className="flex items-center gap-2">
             <button className="p-2 hover:bg-muted rounded-full transition-colors">
@@ -62,6 +62,8 @@ export function FeedPage() {
               post={post}
               onLike={() => likePost(post.id)}
               onShare={handleShare}
+              onAddComment={(content) => addComment(post.id, content)}
+              currentUser={user}
             />
           ))}
         </div>
