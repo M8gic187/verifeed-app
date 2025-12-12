@@ -1,0 +1,35 @@
+name: Extract Hex Colors
+
+on:
+  push:
+    paths-ignore:
+      - 'hex-output/**'
+  workflow_dispatch: {}
+  schedule:
+    - cron: '0 6 * * 1' # weekly on Monday at 06:00 UTC (optional)
+
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install requirements (if any)
+        run: |
+          python -m pip install --upgrade pip || true
+
+      - name: Run hex extraction
+        run: |
+          python3 scripts/extract_hex.py .
+
+      - name: Upload hex output
+        uses: actions/upload-artifact@v4
+        with:
+          name: hexcodes
+          path: hex-output/
