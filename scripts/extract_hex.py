@@ -23,13 +23,11 @@ skip_dirs = {"node_modules", ".git"}
 
 def is_text_file(path):
     ext = os.path.splitext(path)[1].lower()
-    return ext in text_extensions or ext == ""
+    return ext in text_extensions
 
 for dirpath, dirnames, filenames in os.walk(root):
     # skip node_modules and .git
-    parts = set(dirpath.split(os.sep))
-    if parts & skip_dirs:
-        continue
+    dirnames[:] = [d for d in dirnames if d not in skip_dirs]
     for fn in filenames:
         path = os.path.join(dirpath, fn)
         if not is_text_file(path):
